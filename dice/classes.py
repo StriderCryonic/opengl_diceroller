@@ -339,13 +339,14 @@ class d12:
                     (14,13,1,17,3),
                     (17,18,4,11,3),
                     (11,12,8,16,4))
+        glEnable(GL_BLEND)
         glBegin(GL_POLYGON)
         for surface in surfaces:
             for vertex in surface:
                 if val == surfaces.index(surface):
-                    glColor3f(1,1,0.5)
+                    glColor4f(1,1,0.5,1)
                 else:
-                    glColor3f(.5,0,1)
+                    glColor4f(.5,0,1, 0)
                 glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
         glEnd()
         glColor3f(1,1,1)
@@ -354,3 +355,4 @@ class d12:
             for vertex in edge:
                 glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
         glEnd()
+        
