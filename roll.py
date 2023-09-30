@@ -1,22 +1,40 @@
 from dice import classes as d
-import OpenGL
 from OpenGL.GL import *
-from OpenGL.GLUT import *
 from OpenGL.GLU import *
+import pygame
+from pygame.locals import *
 
 w, h = 500,500
 d12 = d.d12("whatever")
-def showScreen():
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) # Remove everything from screen (i.e. displays all white)
-    glLoadIdentity() # Reset all graphic/shape's position
-    d12.render(45)
-    glutSwapBuffers()
+def showScreen(val):
+    d12.render(val)
 
-glutInit()
-glutInitDisplayMode(GLUT_RGBA) # Set the display mode to be colored
-glutInitWindowSize(500, 500)   # Set the w and h of your window
-glutInitWindowPosition(0, 0)   # Set the position at which this windows should appear
-wind = glutCreateWindow("OpenGL Coding Practice") # Set a window title
-glutDisplayFunc(showScreen)
-glutIdleFunc(showScreen) # Keeps the window open
-glutMainLoop()
+
+def init():
+    pygame.init()
+    display = (w,h)
+    pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
+    gluPerspective(45, (display[0]/display[1]), 0.1, 50.0)
+    glTranslatef(0.0,0.0,-5)
+
+def loop():
+    val = 0
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                print(val)
+                quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                val += 1
+                if val == 12:
+                    val = 0
+        glRotatef(1,0,1,0)
+        glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
+        showScreen(val)
+        pygame.display.flip()
+        pygame.time.wait(10)
+
+
+init()
+loop()

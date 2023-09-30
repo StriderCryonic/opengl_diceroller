@@ -1,5 +1,4 @@
 from OpenGL.GL import *
-from OpenGL.GLUT import *
 from OpenGL.GLU import *
 import math
 
@@ -340,11 +339,13 @@ class d12:
                     (14,13,1,17,3),
                     (17,18,4,11,13),
                     (11,12,8,16,4))
-        glRotatef(val,1,1,1)
         glBegin(GL_POLYGON)
         for surface in surfaces:
             for vertex in surface:
-                glColor3f(.5,0,1)
+                if val == surfaces.index(surface):
+                    glColor3f(1,1,0.5)
+                else:
+                    glColor3f(.5,0,1)
                 glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
         glEnd()
         glColor3f(1,1,1)
