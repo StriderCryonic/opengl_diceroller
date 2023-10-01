@@ -29,8 +29,18 @@ def loop():
                 val += 1
                 if val == 12:
                     val = 0
-            elif event.type == pygame.MOUSEMOTION:
-                glRotatef(1,0,1,0)
+    
+        keys = pygame.key.get_pressed()
+        #rotator
+        if keys[pygame.K_UP]:
+            glRotated(3, 1, 0, 0)
+        if keys[pygame.K_DOWN]:
+            glRotated(3,-1, 0, 0)
+        if keys[pygame.K_LEFT]:
+            glRotated(3, 0, -1, 0)
+        if keys[pygame.K_RIGHT]:
+            glRotated(3, 0, 1, 0)
+            
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
         showScreen(val)
         pygame.display.flip()
