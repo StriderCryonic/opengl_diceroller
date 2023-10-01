@@ -327,9 +327,10 @@ class d12:
                  (12,8),
                  (16,4),
                  (5,19))
-        surfaces = ((1,9,2,18,17),
+        surfaces = (
+                    (1,9,2,18,17),
                     (1,13,5,10,9),
-                    (2,15,6,10,9),
+                    (2,9,10,6,15),
                     (2,18,4,16,15),
                     (5,10,6,20,19),
                     (6,15,16,8,20),
@@ -338,17 +339,18 @@ class d12:
                     (19,7,14,13,5),
                     (14,13,1,17,3),
                     (17,18,4,11,3),
-                    (11,12,8,16,4))
+                    (11,12,8,16,4),
+                    )
         glEnable(GL_BLEND)
-        glBegin(GL_POLYGON)
         for surface in surfaces:
+            glBegin(GL_POLYGON)
             for vertex in surface:
                 if val == surfaces.index(surface):
                     glColor4f(1,1,0.5,1)
                 else:
-                    glColor4f(.5,0,1, 0)
+                    glColor4f(.5,0,1, 0.1)
                 glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
-        glEnd()
+            glEnd()
         glColor3f(1,1,1)
         glBegin(GL_LINES)
         for edge in edges:
