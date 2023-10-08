@@ -275,7 +275,7 @@ class d12:
     def __init__(self, style):
         self.style = style
     
-    def render(self,val):
+    def render(self):
         a = (1+math.sqrt(5))/2
         vertices = ((-1,-1,1),
                     (1,-1,1),
@@ -345,10 +345,7 @@ class d12:
         for surface in surfaces:
             glBegin(GL_POLYGON)
             for vertex in surface:
-                if val == surfaces.index(surface):
-                    glColor4f(1,1,0.5,1)
-                else:
-                    glColor4f(.5,0,1, 0.1)
+                glColor4f(.5,0,1, 0.1)
                 glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
             glEnd()
         glColor3f(1,1,1)
