@@ -1,6 +1,9 @@
 from OpenGL.GL import *
 from OpenGL.GLU import *
 import math
+import pygame
+
+textures = {'galaxy':r"Textures/Galaxy/", 'blood':r"Textures/Blood/"}
 
 class d6:
     style = ""
@@ -29,18 +32,32 @@ class d6:
                  (7,3),
                  (7,4))
         surfaces = ((0,1,2,3),
-                    (0,3,4,7),
-                    (0,1,4,5),
+                    (0,3,7,4),
                     (2,3,6,7),
+                    (0,1,4,5),
                     (1,2,5,6),
                     (4,5,6,7))
         glRotatef(val,1,1,1)
-        glBegin(GL_QUADS)
+        glEnable(GL_TEXTURE_2D)
+        rgb = []
+        img = [pygame.image.load("{}/Galaxy{}.png".format(textures[self.style], i)).convert() for i in range(1,7)]
+        for i in range(0,6):
+            rgb.append(pygame.image.tostring(img[i],"RGBA",True))
+        texture = glGenTextures(6)
         for surface in surfaces:
+            j = 0
+            
+            glBindTexture(GL_TEXTURE_2D, texture[j])
+            glTexImage2D(GL_TEXTURE_2D,3,GL_RGBA,1080,1080,0,GL_RGBA,GL_UNSIGNED_BYTE,rgb[j])
+            glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST_MIPMAP_NEAREST)
+            # glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST)
+            glBegin(GL_QUADS)
+            
             for vertex in surface:
-                glColor3f(100,0,100)
+                # glColor3f(100,0,100)
                 glVertex3f(*[i-0.5 for i in vertices[vertex]])
-        glEnd()
+            j+=1
+            glEnd()
         glColor3f(0,0,1)
         glBegin(GL_LINES)
         for edge in edges:
