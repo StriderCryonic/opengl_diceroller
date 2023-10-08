@@ -40,7 +40,7 @@ class d6:
         glRotatef(val,1,1,1)
         glEnable(GL_TEXTURE_2D)
         rgb = []
-        img = [pygame.image.load("{}/Galaxy{}.png".format(textures[self.style], i)).convert() for i in range(1,7)]
+        img = [pygame.image.load("{}/Blood{}.png".format(textures[self.style], i)).convert() for i in range(1,7)]
         for i in range(0,6):
             rgb.append(pygame.image.tostring(img[i],"RGBA",True))
         texture = glGenTextures(6)

@@ -1,6 +1,6 @@
 from dice import classes as d
 
-d12 = d.d6("whatever")
+d12 = d.d6("blood")
 
 def renderd12():
-    d12.render()
+    d12.render(0)
