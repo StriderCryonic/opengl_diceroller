@@ -11,3 +11,12 @@ def check_for_roll_button():
             return True
     else:
         return False
+    
+def check_for_inspect_button():
+    bottom = (35,526)
+    top = (494,1000)
+    if (bottom)[0] <= pygame.mouse.get_pos()[0] <= (top)[0]:
+        if (bottom)[1] <= pygame.mouse.get_pos()[1] <= (top)[1]:
+            return True
+    else:
+        return False
