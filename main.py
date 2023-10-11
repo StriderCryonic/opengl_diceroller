@@ -69,6 +69,8 @@ def mainmenu(screenwindow):
                 quit()
         if funcs.buttons.check_return():
             flag = 'dice'
+        if funcs.GUI.check_for_roll_button():
+            print('yes')
         pygame.transform.scale(menu, (funcs.GUI.width, funcs.GUI.height))
         screenwindow.blit(menu, (0,0))
         pygame.display.update()
