@@ -14,3 +14,9 @@ def check_rotator():
         glRotated(3, 0, -1, 0)
     if keys[pygame.K_RIGHT]:
         glRotated(3, 0, 1, 0)
+
+
+def check_return():
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_BACKSPACE]:
+        return True

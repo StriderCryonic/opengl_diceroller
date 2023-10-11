@@ -7,16 +7,18 @@ from OpenGL.GLU import *
 
 currentDie = 4
 dice = [4,6,8,10,12,20]
-
+flag = 'dice'
+screenwindow = ''
 def init():
+    global screenwindow
     pygame.init()
-    pygame.display.set_mode((funcs.GUI.width, funcs.GUI.height), DOUBLEBUF|OPENGL)
+    screenwindow = pygame.display.set_mode((funcs.GUI.width, funcs.GUI.height), DOUBLEBUF|OPENGL)
     gluPerspective(45, (funcs.GUI.width/funcs.GUI.height), 0.1, 50.0)
     glTranslatef(0.0,0.0,-5)
 
 def diceScreen():
-    global currentDie, dice
-    while True:
+    global currentDie, dice, flag
+    while flag == 'dice':
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -28,7 +30,9 @@ def diceScreen():
                     currentDie = dice[0]
 
         funcs.buttons.check_rotator()
-
+        if funcs.buttons.check_return():
+            flag = 'menu'
+            break
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
 
         if currentDie == 4:
@@ -43,15 +47,30 @@ def diceScreen():
             roll.renderd12()
         elif currentDie == 20:
             roll.renderd20()
-
-
-
-
-
-
-
         pygame.display.flip()
         pygame.time.wait(10)
 
+def mainmenu():
+    global screenwindow
+    menu = pygame.image.load("./Textures/GUI/before.png").convert()
+    while flag == 'menu':
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        
+        screenwindow.blit(menu, (0,0))
+        
+        pygame.display.flip()
+        pygame.time.wait(10)
+        
+def screen():
+    while True:
+        if flag == 'menu':
+            mainmenu()
+        elif flag == 'dice':
+            diceScreen()
+        
+
 init()
-diceScreen()
+screen()
