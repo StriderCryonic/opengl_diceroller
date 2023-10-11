@@ -1,4 +1,4 @@
 import pygame
 
-width = 500
-height = 500
+width = 1080
+height = 1080
