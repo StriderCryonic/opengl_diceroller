@@ -55,24 +55,37 @@ def diceScreen():
 
 def mainmenu(screenwindow):
     global flag
+    comingsoon = False
+    counter = 0
     menu = pygame.image.load("./Textures/GUI/before.png").convert()
-    menupopup = pygame.image.load("./Textures/GUI/after.png").convert()
+    menupopup = pygame.image.load("./Textures/GUI/after.png").convert() 
+    comingsoonimg = pygame.image.load("./Textures/GUI/comingsoon.png").convert()
     while flag == 'menu':
         for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN and not comingsoon:
                 print(pygame.mouse.get_pos())
+                if funcs.GUI.check_for_inspect_button():
+                    flag = 'dice'
+                elif funcs.GUI.check_for_roll_button():
+                    comingsoon = True
             if funcs.buttons.check_exit():
                 pygame.quit()
                 quit()
             elif event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-        if funcs.buttons.check_return():
-            flag = 'dice'
-        if funcs.GUI.check_for_roll_button() or funcs.GUI.check_for_inspect_button():
-            screenwindow.blit(menupopup, (0,0))
+        if comingsoon:
+            if counter < 500:
+                screenwindow.blit(comingsoonimg, (0,0))
+                counter += 1
+            elif counter == 500:
+                counter = 0
+                comingsoon = False
         else:
-            screenwindow.blit(menu, (0,0))
+            if funcs.GUI.check_for_roll_button() or funcs.GUI.check_for_inspect_button():
+                screenwindow.blit(menupopup, (0,0))
+            else:
+                screenwindow.blit(menu, (0,0))
 
         pygame.display.update()
         pygame.display.flip()
@@ -86,7 +99,5 @@ def screen():
         elif flag == 'dice':
             initGL()
             diceScreen()
-
-
 
 screen()
