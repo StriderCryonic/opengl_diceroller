@@ -77,7 +77,7 @@ class d6:
 class d20:
     style = ""
     def __init__(self,style):
-        self.style
+        self.style = style
 
     def render(self):
         a = (1+math.sqrt(5))/2
@@ -143,19 +143,41 @@ class d20:
                     (4,12,11),
                     (7,8,9),
                     (7,8,12))
-        glColor3f(0,0,1)
-        glBegin(GL_POLYGON)
+        coords = ((0,0),(1,0),(0.5,math.sqrt(3)/2))
+
+        glEnable(GL_TEXTURE_2D)
+        rgb = []
+        img = [pygame.image.load("{}/Blood{}.png".format(textures[self.style], i)) for i in range(1,21)]
+        for i in range(0,20):
+            img[i] = pygame.transform.scale(img[i],(128,128))
+            rgb.append(pygame.image.tostring(img[i],"RGBA",1))
+
+        glEnable(GL_DEPTH_TEST)
+        j = 0
+        # glColor3f(1,0,1)
+        
         for surface in surfaces:
+            glEnable(GL_TEXTURE_2D)
+        
+            glBindTexture(GL_TEXTURE_2D, glGenTextures(1))
+            glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
+            glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 128, 128, 0, GL_RGBA, GL_UNSIGNED_BYTE,rgb[j])
+
+            k = 0
+            glBegin(GL_POLYGON)
             for vertex in surface:
-                
+                glTexCoord2f(*[i for i in coords[k]])
                 glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
-        glEnd()
-        glColor3f(255,255,255)
-        glBegin(GL_LINES)
-        for edge in edges:
-            for vertex in edge:
-                glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
-        glEnd()
+                k+=1
+            j+=1
+            glEnd()
+        # glColor3f(255,255,255)
+        # glBegin(GL_LINES)
+        # for edge in edges:
+        #     for vertex in edge:
+        #         glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
+        # glEnd()
 
 class d4:
     style = ""
@@ -412,17 +434,46 @@ class d12:
                     (17,18,4,11,3),
                     (11,12,8,16,4),
                     )
-        glColor4f(.5,0,1, 0.1)
+
+        coords = ((0,0),(1,0),
+                  (math.cos(math.radians(72))+0.5,math.sin(math.radians(72)+0.7)),
+                  (math.cos(math.radians(144))+0.5,math.sin(math.radians(144))+0.7),
+                  (math.cos(math.radians(216))+0.5,math.sin(math.radians(216))+0.7))
+
+        glEnable(GL_TEXTURE_2D)
+        rgb = []
+        img = [pygame.image.load("{}/Blood{}.png".format(textures[self.style], i)) for i in range(1,13)]
+        for i in range(0,12):
+            img[i] = pygame.transform.scale(img[i],(128,128))
+            rgb.append(pygame.image.tostring(img[i],"RGBA",1))
+
+        glEnable(GL_DEPTH_TEST)
+        j = 0
+        # glColor3f(1,0,1)
+        
         for surface in surfaces:
+            glEnable(GL_TEXTURE_2D)
+        
+            glBindTexture(GL_TEXTURE_2D, glGenTextures(1))
+            glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
+            # glTexParameterf(GL_TEXTURE_2D,GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
+
+            glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
+            glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 128, 128, 0, GL_RGBA, GL_UNSIGNED_BYTE,rgb[j])
+
+            k = 0
             glBegin(GL_POLYGON)
             for vertex in surface:
-                
+                glTexCoord2f(*[i for i in coords[k]])
                 glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
+                k+=1
+            j+=1
             glEnd()
-        glColor3f(1,1,1)
-        glBegin(GL_LINES)
-        for edge in edges:
-            for vertex in edge:
-                glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
-        glEnd()
+        # glColor3f(1,1,1)
+        # glBegin(GL_LINES)
+        # for edge in edges:
+        #     for vertex in edge:
+        #         glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
+        # glEnd()
         
