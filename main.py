@@ -7,7 +7,7 @@ from OpenGL.GLU import *
 
 currentDie = 4
 dice = [4,6,8,10,12,20]
-flag = 'dice'
+flag = 'menu'
 
 def initGL():
     pygame.init()
@@ -37,19 +37,8 @@ def diceScreen():
         if funcs.buttons.check_return():
             flag = 'menu'
         glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
-
-        if currentDie == 4:
-            roll.renderd4()
-        elif currentDie == 6:
-            roll.renderd6()
-        elif currentDie == 8:
-            roll.renderd8()
-        elif currentDie == 10:
-            roll.renderd10()
-        elif currentDie == 12:
-            roll.renderd12()
-        elif currentDie == 20:
-            roll.renderd20()
+        
+        roll.render[dice.index(currentDie)]()
         pygame.display.flip()
         pygame.time.wait(10)
 

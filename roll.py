@@ -26,3 +26,5 @@ def renderd12():
 def renderd20():
     d20.render()
 
+render = [renderd4, renderd6, renderd8, renderd10, renderd12, renderd20]
+
