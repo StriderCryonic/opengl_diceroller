@@ -45,7 +45,7 @@ def diceScreen():
 def mainmenu(screenwindow):
     global flag
     comingsoon = False
-    counter = 0
+    counter = holder = 0
     menu = pygame.image.load("./Textures/GUI/before.png").convert()
     menupopup = pygame.image.load("./Textures/GUI/after.png").convert() 
     comingsoonimg = pygame.image.load("./Textures/GUI/comingsoon.png").convert()
@@ -57,10 +57,7 @@ def mainmenu(screenwindow):
                     flag = 'dice'
                 elif funcs.GUI.check_for_roll_button():
                     comingsoon = True
-            if funcs.buttons.check_exit():
-                pygame.quit()
-                quit()
-            elif event.type == pygame.QUIT:
+            if funcs.buttons.check_exit() or event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
         if comingsoon:
@@ -71,8 +68,14 @@ def mainmenu(screenwindow):
                 counter = 0
                 comingsoon = False
         else:
-            if funcs.GUI.check_for_roll_button() or funcs.GUI.check_for_inspect_button():
+            if funcs.GUI.check_for_roll_button() or funcs.GUI.check_for_inspect_button() or holder < 0:
                 screenwindow.blit(menupopup, (0,0))
+                if holder < 0 and not funcs.GUI.check_for_dice():
+                    holder += 1
+                elif holder == 0:
+                    holder -= 150
+                elif holder < 0 and funcs.GUI.check_for_dice():
+                    holder = -150
             else:
                 screenwindow.blit(menu, (0,0))
 
