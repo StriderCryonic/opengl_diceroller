@@ -1,8 +1,8 @@
 from dice import classes as d
 
 d4 = d.d4("blood")
-d6 = d.d6("blood")
-d8 = d.d8("blood")
+d6 = d.d6("galaxy")
+d8 = d.d8("galaxy")
 d10 = d.d10("blood")
 d12 = d.d12("blood")
 d20 = d.d20("blood")

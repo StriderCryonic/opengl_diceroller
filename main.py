@@ -5,7 +5,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-currentDie = 4
+currentDie = 20
 dice = [4,6,8,10,12,20]
 flag = 'menu'
 
@@ -27,11 +27,6 @@ def diceScreen():
             if funcs.buttons.check_exit():
                 pygame.quit()
                 quit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if dice.index(currentDie) != len(dice) -1:
-                    currentDie = dice[dice.index(currentDie) + 1]
-                else:
-                    currentDie = dice[0]
 
         funcs.buttons.check_rotator()
         if funcs.buttons.check_return():
