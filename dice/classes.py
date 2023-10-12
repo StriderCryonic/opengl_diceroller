@@ -1,6 +1,7 @@
 from OpenGL.GL import *
 from OpenGL.GLU import *
 import math
+import pygame
 
 textures = {'galaxy':r"Textures/Galaxy/", 'blood':r"Textures/Blood/"}
 
@@ -31,35 +32,47 @@ class d6:
                  (7,3),
                  (7,4))
         surfaces = ((0,1,2,3),
-                    (0,3,7,4),
-                    (2,3,6,7),
-                    (0,1,4,5),
-                    (1,2,5,6),
-                    (4,5,6,7))
+            (0,3,7,4),
+            (2,3,7,6),
+            (0,1,5,4),
+            (1,2,6,5),
+            (4,5,6,7))
+        
+        coords = ((0,0),(0,1),(1,1),(1,0))
         glEnable(GL_TEXTURE_2D)
         rgb = []
-        #img = [pygame.image.load("{}/Blood{}.png".format(textures[self.style], i)).convert() for i in range(1,7)]
-        #for i in range(0,6):
-            #rgb.append(pygame.image.tostring(img[i],"RGBA",True))
-        #texture = glGenTextures(6)
+        img = [pygame.image.load("{}/Blood{}.png".format(textures[self.style], i)) for i in range(1,7)]
+        for i in range(0,6):
+            img[i] = pygame.transform.scale(img[i],(256,256))
+            rgb.append(pygame.image.tostring(img[i],"RGBA",1))
+
+        glEnable(GL_DEPTH_TEST)
+        j = 0
         for surface in surfaces:
-            j = 0
-            #glBindTexture(GL_TEXTURE_2D, texture[j])
-            #glTexImage2D(GL_TEXTURE_2D,3,GL_RGBA,1080,1080,0,GL_RGBA,GL_UNSIGNED_BYTE,rgb[j])
-            #glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_NEAREST_MIPMAP_NEAREST)
-            # glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_NEAREST)
+            
+            glEnable(GL_TEXTURE_2D)
+        
+            glBindTexture(GL_TEXTURE_2D, glGenTextures(1))
+            glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
+            glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 256, 0, GL_RGBA, GL_UNSIGNED_BYTE,rgb[j])
+
+            k = 0
             glBegin(GL_QUADS)
+        
             for vertex in surface:
-                glColor3f(100,0,100)
+                # glColor3f(100,0,100)
+                glTexCoord2f(*[i for i in coords[k]])
                 glVertex3f(*[i-0.5 for i in vertices[vertex]])
+                k+=1
             j+=1
             glEnd()
-        glColor3f(0,0,1)
-        glBegin(GL_LINES)
-        for edge in edges:
-            for vertex in edge:
-                glVertex3f(*[i-0.5 for i in vertices[vertex]])
-        glEnd()
+        # glColor3f(0,0,1)
+        # glBegin(GL_LINES)
+        # for edge in edges:
+        #     for vertex in edge:
+        #         glVertex3f(*[i-0.5 for i in vertices[vertex]])
+        # glEnd()
 
 class d20:
     style = ""
@@ -130,10 +143,11 @@ class d20:
                     (4,12,11),
                     (7,8,9),
                     (7,8,12))
+        glColor3f(0,0,1)
         glBegin(GL_POLYGON)
         for surface in surfaces:
             for vertex in surface:
-                glColor3f(0,0,1)
+                
                 glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
         glEnd()
         glColor3f(255,255,255)
@@ -166,10 +180,11 @@ class d4:
                     (0,2,3),
                     (0,3,1),
                     (1,2,3))
+        glColor3f(1,0,0)
         glBegin(GL_POLYGON)
         for surface in surfaces:
             for vertex in surface:
-                glColor3f(1,0,0)
+                
                 glVertex3f(*[i*0.5 for i in vertices[vertex]])
         glEnd()
         glColor3f(1,1,1)
@@ -213,10 +228,11 @@ class d8:
                     (1,2,5),
                     (1,3,4),
                     (1,3,5))
+        glColor3f(1,0,1)
         glBegin(GL_POLYGON)
         for surface in surfaces:
             for vertex in surface:
-                glColor3f(1,0,1)
+                
                 glVertex3f(*[i*0.5 for i in vertices[vertex]])
         glEnd()
         glColor3f(1,1,1)
@@ -265,10 +281,11 @@ class d10:
                     (1,2,5),
                     (1,3,6),
                     (1,6,4))
+        glColor3f(1,.5,0)
         glBegin(GL_POLYGON)
         for surface in surfaces:
             for vertex in surface:
-                glColor3f(1,.5,0)
+                
                 glVertex3f(*[i*0.75 for i in vertices[vertex]])
         glEnd()
         glColor3f(1,1,1)
@@ -350,11 +367,11 @@ class d12:
                     (17,18,4,11,3),
                     (11,12,8,16,4),
                     )
-        glEnable(GL_BLEND)
+        glColor4f(.5,0,1, 0.1)
         for surface in surfaces:
             glBegin(GL_POLYGON)
             for vertex in surface:
-                glColor4f(.5,0,1, 0.1)
+                
                 glVertex3f(*[i*0.5 for i in vertices[vertex-1]])
             glEnd()
         glColor3f(1,1,1)
