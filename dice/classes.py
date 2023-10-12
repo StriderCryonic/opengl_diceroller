@@ -43,7 +43,7 @@ class d6:
         rgb = []
         img = [pygame.image.load("{}/Blood{}.png".format(textures[self.style], i)) for i in range(1,7)]
         for i in range(0,6):
-            img[i] = pygame.transform.scale(img[i],(256,256))
+            img[i] = pygame.transform.scale(img[i],(128,128))
             rgb.append(pygame.image.tostring(img[i],"RGBA",1))
 
         glEnable(GL_DEPTH_TEST)
@@ -55,7 +55,7 @@ class d6:
             glBindTexture(GL_TEXTURE_2D, glGenTextures(1))
             glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
             glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 256, 256, 0, GL_RGBA, GL_UNSIGNED_BYTE,rgb[j])
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 128, 128, 0, GL_RGBA, GL_UNSIGNED_BYTE,rgb[j])
 
             k = 0
             glBegin(GL_QUADS)
@@ -228,19 +228,42 @@ class d8:
                     (1,2,5),
                     (1,3,4),
                     (1,3,5))
-        glColor3f(1,0,1)
-        glBegin(GL_POLYGON)
+        
+        coords = ((0,0),(1,0),(0.5,math.sqrt(3)/2))
+
+        glEnable(GL_TEXTURE_2D)
+        rgb = []
+        img = [pygame.image.load("{}/Blood{}.png".format(textures[self.style], i)) for i in range(1,9)]
+        for i in range(0,8):
+            img[i] = pygame.transform.scale(img[i],(128,128))
+            rgb.append(pygame.image.tostring(img[i],"RGBA",1))
+
+        glEnable(GL_DEPTH_TEST)
+        j = 0
+        # glColor3f(1,0,1)
+        
         for surface in surfaces:
+            glEnable(GL_TEXTURE_2D)
+        
+            glBindTexture(GL_TEXTURE_2D, glGenTextures(1))
+            glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
+            glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 128, 128, 0, GL_RGBA, GL_UNSIGNED_BYTE,rgb[j])
+
+            k = 0
+            glBegin(GL_POLYGON)
             for vertex in surface:
-                
+                glTexCoord2f(*[i for i in coords[k]])
                 glVertex3f(*[i*0.5 for i in vertices[vertex]])
-        glEnd()
-        glColor3f(1,1,1)
-        glBegin(GL_LINES)
-        for edge in edges:
-            for vertex in edge:
-                glVertex3f(*[i*0.5 for i in vertices[vertex]])
-        glEnd()
+                k+=1
+            j+=1
+            glEnd()
+        # glColor3f(1,1,1)
+        # glBegin(GL_LINES)
+        # for edge in edges:
+        #     for vertex in edge:
+        #         glVertex3f(*[i*0.5 for i in vertices[vertex]])
+        # glEnd()
 
 class d10:
     style = ""
@@ -281,13 +304,35 @@ class d10:
                     (1,2,5),
                     (1,3,6),
                     (1,6,4))
-        glColor3f(1,.5,0)
-        glBegin(GL_POLYGON)
+        coords = ((0,0),(1,0),(0.5,math.sqrt(3)/2))
+
+        glEnable(GL_TEXTURE_2D)
+        rgb = []
+        img = [pygame.image.load("{}/Blood{}.png".format(textures[self.style], i)) for i in range(1,11)]
+        for i in range(0,10):
+            img[i] = pygame.transform.scale(img[i],(128,128))
+            rgb.append(pygame.image.tostring(img[i],"RGBA",1))
+
+        glEnable(GL_DEPTH_TEST)
+        j = 0
+        # glColor3f(1,.5,0)
+        
         for surface in surfaces:
+            glEnable(GL_TEXTURE_2D)
+        
+            glBindTexture(GL_TEXTURE_2D, glGenTextures(1))
+            glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
+            glTexParameter(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR)
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 128, 128, 0, GL_RGBA, GL_UNSIGNED_BYTE,rgb[j])
+
+            k = 0
+            glBegin(GL_POLYGON)
             for vertex in surface:
-                
+                glTexCoord2f(*[i for i in coords[k]])
                 glVertex3f(*[i*0.75 for i in vertices[vertex]])
-        glEnd()
+                k+=1
+            j+=1
+            glEnd()
         glColor3f(1,1,1)
         glBegin(GL_LINES)
         for edge in edges:
