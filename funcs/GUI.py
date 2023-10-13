@@ -51,5 +51,13 @@ def check_dice_index():
         return 4
     elif check_area(d20bottom, d20top):
         return 5
-    
-    
+
+def drawRects(dicethemetuple):
+    btop = [(390, 45),(390, 208),(390, 368),(390, 521),(390, 678),(390, 835)]
+    gtop = [(764,45),(764,208),(764,368),(764,521),(764,678),(764,835)]
+    theme = [btop, gtop]
+    rectlist = []
+    for itemind in range(len(dicethemetuple)):
+        rectlist.append(pygame.Rect(theme[dicethemetuple[itemind]][itemind][0], theme[dicethemetuple[itemind]][itemind][1], 147,147))   
+
+    return rectlist

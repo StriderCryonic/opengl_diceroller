@@ -25,3 +25,8 @@ def check_exit():
     keys = pygame.key.get_pressed()
     if keys[pygame.K_q]:
         return True
+
+def check_options():
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_o]:
+        return True

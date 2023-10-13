@@ -8,6 +8,8 @@ from OpenGL.GLU import *
 currentDie = 20
 dice = [4,6,8,10,12,20]
 flag = 'menu'
+dicethemes = [0,0,0,0,0,0]
+
 
 def convenienceHolder(menupopup, screenwindow, holder):
     screenwindow.blit(menupopup, (0,0))
@@ -18,7 +20,6 @@ def convenienceHolder(menupopup, screenwindow, holder):
     elif holder < 0 and funcs.GUI.check_for_dice():
         holder = -150
     return holder
-
 
 def initGL():
     pygame.init()
@@ -53,7 +54,7 @@ def diceScreen():
         pygame.time.wait(10)
 
 def mainmenu(screenwindow):
-    global flag, currentDie
+    global flag, currentDie, dicethemes
     comingsoon = False
     counter = holder = 0
     hoverflag = 'none'
@@ -81,6 +82,8 @@ def mainmenu(screenwindow):
                 counter = 0
                 comingsoon = False
         else:
+            if funcs.buttons.check_options():
+                flag = 'options'
             if funcs.GUI.check_for_roll_button():
                 holder = convenienceHolder(menupopup, screenwindow, holder)
                 hoverflag = 'roll'
@@ -96,7 +99,31 @@ def mainmenu(screenwindow):
         pygame.display.update()
         pygame.display.flip()
         pygame.time.wait(10)
+
+def options(screenwindow):
+    global flag, dicethemes
+    options = pygame.image.load("./Textures/GUI/settings.png").convert() 
+    while flag == 'options':
+        for event in pygame.event.get():
+            if funcs.buttons.check_exit():
+                pygame.quit()
+                quit()
+            elif funcs.buttons.check_return():
+                flag = 'menu'
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print(pygame.mouse.get_pos())
         
+        dicerects = funcs.GUI.drawRects(dicethemes)
+        dicethemes[3] = 1
+        screenwindow.blit(options, (0,0))
+        for i in range(len(dicerects)):
+            pygame.draw.rect(screenwindow, (255,0,0), dicerects[i], width=5, border_radius=10)
+        
+        pygame.display.update()
+        pygame.display.flip()
+        pygame.time.wait(10)
+
+
 def screen():
     while True:
         if flag == 'menu':
@@ -105,5 +132,8 @@ def screen():
         elif flag == 'dice':
             initGL()
             diceScreen()
+        elif flag == 'options':
+            screenwindow = initPy()
+            options(screenwindow)
 
 screen()

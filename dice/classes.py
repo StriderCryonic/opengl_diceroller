@@ -6,10 +6,10 @@ import pygame
 textures = {'galaxy':r"Textures/Galaxy/", 'blood':r"Textures/Blood/"}
 
 class d6:
-    style = ""
     def __init__(self, style):
         self.style = style
-    
+        self.styles = ['blood', 'galaxy']
+
     def render(self):
         vertices = ((0,0,0),
                     (1,0,0),
@@ -41,7 +41,7 @@ class d6:
         coords = ((0,0),(0,1),(1,1),(1,0))
         glEnable(GL_TEXTURE_2D)
         rgb = []
-        img = [pygame.image.load("{}/{}.png".format(textures[self.style], self.style.capitalize()+str(i))) for i in range(1,7)]
+        img = [pygame.image.load("{}/{}.png".format(textures[self.styles[self.style]], self.styles[self.style].capitalize()+str(i))) for i in range(1,7)]
         for i in range(0,6):
             img[i] = pygame.transform.scale(img[i],(128,128))
             rgb.append(pygame.image.tostring(img[i],"RGBA",1))
@@ -75,10 +75,9 @@ class d6:
         # glEnd()
 
 class d20:
-    style = ""
     def __init__(self,style):
         self.style = style
-
+        self.styles = ['blood', 'galaxy']
     def render(self):
         a = (1+math.sqrt(5))/2
         vertices = ((-a,1,0),#1 0
@@ -147,7 +146,7 @@ class d20:
 
         glEnable(GL_TEXTURE_2D)
         rgb = []
-        img = [pygame.image.load("{}/{}.png".format(textures[self.style], self.style.capitalize()+str(i))) for i in range(1,21)]
+        img = [pygame.image.load("{}/{}.png".format(textures[self.styles[self.style]], self.styles[self.style].capitalize()+str(i))) for i in range(1,21)]
         for i in range(0,20):
             img[i] = pygame.transform.scale(img[i],(128,128))
             rgb.append(pygame.image.tostring(img[i],"RGBA",1))
@@ -184,7 +183,8 @@ class d4:
     
     def __init__(self, style):
         self.style = style
-    
+        self.styles = ['blood', 'galaxy']
+
     def render(self):
         a = math.sqrt(3)
         b = math.sqrt(6)
@@ -217,11 +217,9 @@ class d4:
         glEnd()
 
 class d8:
-    style = ""
-    
     def __init__(self, style):
         self.style = style
-    
+        self.styles = ['blood', 'galaxy']
     def render(self):
         a = math.sqrt(3)
         vertices = ((a,0,0),
@@ -255,7 +253,7 @@ class d8:
 
         glEnable(GL_TEXTURE_2D)
         rgb = []
-        img = [pygame.image.load("{}/{}.png".format(textures[self.style], self.style.capitalize()+str(i))) for i in range(1,9)]
+        img = [pygame.image.load("{}/{}.png".format(textures[self.styles[self.style]], self.styles[self.style].capitalize()+str(i))) for i in range(1,9)]
         for i in range(0,8):
             img[i] = pygame.transform.scale(img[i],(128,128))
             rgb.append(pygame.image.tostring(img[i],"RGBA",1))
@@ -288,11 +286,10 @@ class d8:
         # glEnd()
 
 class d10:
-    style = ""
-    
     def __init__(self, style):
         self.style = style
-    
+        self.styles = ['blood', 'galaxy']
+
     def render(self):
         vertices = ((0,0,1),
                     (0,0,-1),
@@ -330,7 +327,7 @@ class d10:
 
         glEnable(GL_TEXTURE_2D)
         rgb = []
-        img = [pygame.image.load("{}/{}.png".format(textures[self.style], self.style.capitalize()+str(i))) for i in range(1,11)]
+        img = [pygame.image.load("{}/{}.png".format(textures[self.styles[self.style]], self.styles[self.style].capitalize()+str(i))) for i in range(1,11)]
         for i in range(0,10):
             img[i] = pygame.transform.scale(img[i],(128,128))
             rgb.append(pygame.image.tostring(img[i],"RGBA",1))
@@ -363,11 +360,11 @@ class d10:
         glEnd()
 
 class d12:
-    style = ""
     
     def __init__(self, style):
         self.style = style
-    
+        self.styles = ['blood', 'galaxy']
+
     def render(self):
         a = (1+math.sqrt(5))/2
         vertices = ((-1,-1,1),
@@ -442,7 +439,7 @@ class d12:
 
         glEnable(GL_TEXTURE_2D)
         rgb = []
-        img = img = [pygame.image.load("{}/{}.png".format(textures[self.style], self.style.capitalize()+str(i))) for i in range(1,13)]
+        img = [pygame.image.load("{}/{}.png".format(textures[self.styles[self.style]], self.styles[self.style].capitalize()+str(i))) for i in range(1,13)]
         for i in range(0,12):
             img[i] = pygame.transform.scale(img[i],(128,128))
             rgb.append(pygame.image.tostring(img[i],"RGBA",1))
