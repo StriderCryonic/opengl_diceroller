@@ -5,7 +5,7 @@ d6 = d.d6("galaxy")
 d8 = d.d8("galaxy")
 d10 = d.d10("blood")
 d12 = d.d12("blood")
-d20 = d.d20("blood")
+d20 = d.d20("galaxy")
 
 
 def renderd4():
