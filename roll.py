@@ -1,5 +1,5 @@
 from dice import classes as d
-
+import random
 
 def init(d4val, d6val, d8val, d10val, d12val, d20val):
     global d4, d6, d8, d10, d12, d20
@@ -32,3 +32,5 @@ def renderd20():
 
 render = [renderd4, renderd6, renderd8, renderd10, renderd12, renderd20]
 
+def get_roll(range):
+    return random.randint(1, range+1)

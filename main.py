@@ -5,6 +5,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+
 currentDie = 20
 dice = [4,6,8,10,12,20]
 flag = 'menu'
@@ -58,6 +59,7 @@ def mainmenu(screenwindow):
     comingsoon = False
     counter = holder = 0
     hoverflag = 'none'
+    rollno = 0
     menu = pygame.image.load("./Textures/GUI/before.png").convert()
     menupopup = pygame.image.load("./Textures/GUI/after.png").convert() 
     comingsoonimg = pygame.image.load("./Textures/GUI/comingsoon.png").convert()
@@ -71,14 +73,22 @@ def mainmenu(screenwindow):
                         flag = 'dice'                    
                     elif hoverflag == 'roll':
                         comingsoon = True
+                        _ = funcs.GUI.check_dice_index()
+                        currentDie = dice[_]
+                        rollno = roll.get_roll(currentDie)
             if funcs.buttons.check_exit() or event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
         if comingsoon:
-            if counter < 500:
+            if counter < 50:
+                font = pygame.font.Font('LEMONMILK-BoldItalic.ttf', 40)
+                text = font.render('Your roll is {}, by the way.'.format(rollno), True, (255,0,0),(255,255,255))
+                textRect = text.get_rect()
+                textRect.center = (727,727)
                 screenwindow.blit(comingsoonimg, (0,0))
+                screenwindow.blit(text, textRect)
                 counter += 1
-            elif counter == 500:
+            elif counter == 50:
                 counter = 0
                 comingsoon = False
         else:
@@ -111,10 +121,14 @@ def options(screenwindow):
             elif funcs.buttons.check_return():
                 flag = 'menu'
             if event.type == pygame.MOUSEBUTTONDOWN:
-                print(pygame.mouse.get_pos())
-        
-        dicerects = funcs.GUI.drawRects(dicethemes)
-        dicethemes[3] = 1
+                ind, f = funcs.GUI.check_clicked_dice_theme()
+                if ind != -1:
+                    dicethemes[5-ind] = 0 if f else 1
+
+                    
+        roll.init(dicethemes[0],dicethemes[1],dicethemes[2],dicethemes[3], dicethemes[4], dicethemes[5])
+
+        dicerects = funcs.GUI.drawRects(dicethemes[::-1]) 
         screenwindow.blit(options, (0,0))
         for i in range(len(dicerects)):
             pygame.draw.rect(screenwindow, (255,0,0), dicerects[i], width=5, border_radius=10)

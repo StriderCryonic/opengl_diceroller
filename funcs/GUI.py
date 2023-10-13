@@ -61,3 +61,18 @@ def drawRects(dicethemetuple):
         rectlist.append(pygame.Rect(theme[dicethemetuple[itemind]][itemind][0], theme[dicethemetuple[itemind]][itemind][1], 147,147))   
 
     return rectlist
+
+def check_clicked_dice_theme():
+    btop = [(390, 45),(390, 208),(390, 368),(390, 521),(390, 678),(390, 835)]
+    gtop = [(764,45),(764,208),(764,368),(764,521),(764,678),(764,835)]
+    
+    flag = True
+    for coord in btop:
+        if check_area(coord,(coord[0] + 147, coord[1] + 147)):
+            return btop.index(coord), flag
+    flag = False
+    for coord in gtop:
+        if check_area(coord,(coord[0] + 147, coord[1] + 147)):
+            return gtop.index(coord), flag
+    return -1, False
+
